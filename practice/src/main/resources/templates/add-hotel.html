@@ -8,6 +8,6 @@
 </head>
 <body>
     <h2 th:text="'Hotel dengan id Hotel ' + ${idHotel} + ' berhasil ditambahkan. '"></h2>
-    <a href="/hotel/viewall">Kembali</a>
+    <a th:href="@{/hotel/view?idHotel=}+${idHotel}">Kembali</a>
 </body>
 </html>
