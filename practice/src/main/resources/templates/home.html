@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+    <h2>Selamat Datang di Baton Rogue Parish!</h2>
+    <h3>Tambah Hotel</h3>
+    <td><a th:href="@{/hotel/add}">Tambah Hotel</a></td>
+
+    <h3>Cari Hotel Berdasarkan Id</h3>
+
+    <form th:action="@{/hotel/view}" method="get">
+        Id Hotel : <br>
+        <input type="text" name="idHotel"/>
+        <button type="submit">Cari</button>
+    </form>
+
+    <h3>Lihat Semua Hotel</h3>
+    <td><a th:href="@{/hotel/viewall}">Lihat Semua Hotel</a></td>
+</body>
+</html>

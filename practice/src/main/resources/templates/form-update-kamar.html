@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Update Kamar</title>
+</head>
+<body>
+    <h3>Change Data Kamar</h3>
+    <form th:action="@{/kamar/change}" th:object="${kamar}" method = "POST">
+        <input type="hidden" th:field="*{noKamar}"/>
+        Nama Kamar : <br>
+        <input type="text" name="namaKamar" th:value="*{namaKamar}"/>
+        <br>
+        Tipe Kamar : <br>
+        <select name="tipe">
+            <option value="0">Deluxe</option>
+            <option value="1">Executive</option>
+            <option value="2">President Suite</option>
+        </select>
+        <br>
+        Kapasitas Kamar : <br>
+        <input type="number" name="kapasitasKamar" th:value="*{kapasitasKamar}"/>
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

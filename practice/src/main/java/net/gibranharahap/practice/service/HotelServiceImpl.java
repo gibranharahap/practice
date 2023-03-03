@@ -1,50 +1,71 @@
 package net.gibranharahap.practice.service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import net.gibranharahap.practice.model.HotelModel;
+import net.gibranharahap.practice.repository.HotelDb;
 
 @Service
+@Transactional
 public class HotelServiceImpl implements HotelService{
 
-    private List<HotelModel> listHotel;
-
-    public HotelServiceImpl() {
-        listHotel = new ArrayList<>();
-    }
+    @Autowired
+    HotelDb hotelDb;
 
     @Override
     public void addHotel(HotelModel hotel) {
-        listHotel.add(hotel);
+        hotelDb.save(hotel);
     }
 
     @Override
     public List<HotelModel> getHotelList() {
-        return listHotel;
+        return hotelDb.findAllByOrderByIdDesc();
     }
 
     @Override
-    public HotelModel getHotelByIdHotel(String idHotel) {
-        for (HotelModel hotelModel : listHotel) {
-            if (hotelModel.getIdHotel().equals(idHotel)) {
-                return hotelModel;
-            }
+    public HotelModel getHotelByIdHotel(Long idHotel) {
+
+        try {
+            return hotelDb.findById(idHotel).get();
+
+        } catch (NoSuchElementException exception) {
+            return null;
         }
-        return null;
+        
     }
 
     @Override
-    public void updateHotel(String idHotel, String noTelepon) {
-        HotelModel hotelTarget = getHotelByIdHotel(idHotel);
-        hotelTarget.setNoTelepon(noTelepon);
+    public HotelModel updateHotel(HotelModel hotel) {
+        HotelModel hotelTarget = hotelDb.findById(hotel.getId()).get();
+
+        try {
+            hotelTarget.setNamaHotel(hotel.getNamaHotel());
+            hotelTarget.setAlamat(hotel.getAlamat());
+            hotelTarget.setNomorTelepon(hotel.getNomorTelepon());
+            hotelDb.save(hotelTarget);
+            return hotelTarget;
+                       
+        } catch (NullPointerException nullException) {
+            return null;
+        }
     }
 
     @Override
-    public void deleteHotel(String idHotel) {
-        listHotel.remove(getHotelByIdHotel(idHotel));
+    public HotelModel deleteHotel(Long idHotel) {
+        HotelModel hotelTarget = hotelDb.findById(idHotel).get();
+        if (hotelTarget.getListKamar().isEmpty()) {
+            hotelDb.deleteById(idHotel);
+            return hotelTarget;
+        
+        } else {
+            return null;
+        }
     }
-    
+
 }

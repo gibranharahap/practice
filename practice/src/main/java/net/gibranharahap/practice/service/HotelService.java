@@ -10,9 +10,9 @@ public interface HotelService {
 
     List<HotelModel> getHotelList();
 
-    HotelModel getHotelByIdHotel(String idHotel);
+    HotelModel getHotelByIdHotel(Long idHotel);
 
-    void updateHotel(String idHotel, String noTelepon);
+    HotelModel updateHotel(HotelModel hotel);
 
-    void deleteHotel(String idHotel);
+    HotelModel deleteHotel(Long idHotel);
 }
